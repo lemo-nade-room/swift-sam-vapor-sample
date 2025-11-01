@@ -1,0 +1,113 @@
+openapi: 3.1.0
+
+info:
+  title: Serverless AWS Lambda Event Sourcing Swift Server
+  version: 1.0.0
+  description: SAMを用いたSwift Serverサンプル
+
+paths:
+  /chats:
+    get:
+      summary: チャット一覧を取得
+      operationId: queryChats
+      responses:
+        200:
+          description: チャット一覧を正常取得
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        message:
+                          type: string
+                        chatAt:
+                          type: string
+                          format: date-time
+                      required:
+                        - id
+                        - message
+                        - chatAt
+                required:
+                  - chats
+  /command/chat/{id}/send:
+    post:
+      summary: チャットを送信する
+      operationId: sendChat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  minLength: 1
+      responses:
+        204:
+          description: チャットを送信しました
+        400:
+          description: リクエストが不正です
+        409:
+          description: 既にそのチャットは存在します
+  /command/chat/{id}/edit:
+    post:
+      summary: チャットを編集する
+      operationId: editChat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  minLength: 1
+      responses:
+        204:
+          description: チャットを編集しました
+        400:
+          description: リクエストが不正です
+        404:
+          description: チャットが存在しません
+        409:
+          description: チャットが既に取り消し済みです
+  /command/chat/{id}/cancel:
+    post:
+      summary: チャットを取り消す
+      operationId: cancelChat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: チャットを取り消しました
+        404:
+          description: チャットが存在しません
+        409:
+          description: チャットが既に取り消し済みです

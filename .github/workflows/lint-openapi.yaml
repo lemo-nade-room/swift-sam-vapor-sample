@@ -1,0 +1,21 @@
+name: OpenAPI Lint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Sources/App/openapi.yaml"
+      - ".github/workflows/lint-openapi.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: OpenAPI Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - run: npx --yes @openapitools/openapi-generator-cli validate -i Sources/App/openapi.yaml
