@@ -5,22 +5,34 @@ import PackageDescription
 
 let package = Package(
   name: "swift-lwa-vapor-sample",
-  products: [
-    // Products define the executables and libraries a package produces, making them visible to other packages.
-    .library(
-      name: "swift-lwa-vapor-sample",
-      targets: ["swift-lwa-vapor-sample"]
-    )
+  platforms: [.macOS(.v26)],
+  dependencies: [
+    .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0")
   ],
   targets: [
-    // Targets are the basic building blocks of a package, defining a module or a test suite.
-    // Targets can depend on other targets in this package and products from dependencies.
-    .target(
-      name: "swift-lwa-vapor-sample"
+    .executableTarget(
+      name: "App",
+      dependencies: [
+        .product(name: "Vapor", package: "vapor")
+      ],
+      swiftSettings: swiftSettings,
     ),
     .testTarget(
-      name: "swift-lwa-vapor-sampleTests",
-      dependencies: ["swift-lwa-vapor-sample"]
+      name: "AppTests",
+      dependencies: [
+        .product(name: "VaporTesting", package: "vapor"),
+        .target(name: "App"),
+      ],
+      swiftSettings: swiftSettings,
     ),
-  ]
+  ],
+  swiftLanguageModes: [.v6],
 )
+var swiftSettings: [SwiftSetting] {
+  [
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+    .enableUpcomingFeature("NonescapableTypes"),
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+  ]
+}
