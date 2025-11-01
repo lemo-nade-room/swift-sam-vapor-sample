@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-northeast-1"
+  region = var.region
 }
 
 resource "aws_ecr_repository" "sam_lambda_app" {
