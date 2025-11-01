@@ -25,5 +25,8 @@ jobs:
           push: true
           file: Infra/AWS/SAM/Dockerfile
           tags: ${{ secrets.IMAGE_REGISTRY_URL }}:latest
+          platforms: linux/arm64
+          provenance: false
+          sbom: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
