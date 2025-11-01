@@ -1,0 +1,25 @@
+name: Markdown Yaml JSON Lint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.yaml"
+      - "**/*.json"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - ".github/workflows/lint-deno.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: OpenAPI Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: denoland/setup-deno@v2
+      - run: git ls-files -z -- '*.md' '*.json' '*.yml' '*.yaml' | xargs -0 deno fmt --check
