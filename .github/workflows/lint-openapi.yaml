@@ -1,8 +1,6 @@
 name: OpenAPI Lint
 on:
   push:
-    branches:
-      - main
     paths:
       - "Sources/App/openapi.yaml"
       - ".github/workflows/lint-openapi.yaml"
