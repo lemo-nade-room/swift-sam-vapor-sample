@@ -16,6 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: hashicorp/setup-terraform@v3
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_OIDC_ARN }}
+      - run: terraform init
       - run: terraform fmt -check -recursive
       - run: terraform validate
         working-directory: Infra/AWS/Terraform
