@@ -3,6 +3,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   image-push:
     name: Docker Image Build and Push
