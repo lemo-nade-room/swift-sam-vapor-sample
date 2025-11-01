@@ -59,6 +59,7 @@ jobs:
             --template template.yaml \
             --config-file samconfig.toml \
             --region "$AWS_REGION" \
+            --image-repositories "AppFunc=$IMAGE_URI" \
             --parameter-overrides ImageUri="$IMAGE_URI"
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
