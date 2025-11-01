@@ -1,0 +1,10 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "swift-sam-vapor-sample"
+resolve_s3 = true
+s3_prefix = "swift-sam-vapor-sample"
+confirm_changeset = false
+no_fail_on_empty_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = false

@@ -12,6 +12,8 @@ jobs:
     name: Docker Image Build and Push
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 15
+    outputs:
+      image_digest: ${{ steps.build.outputs.digest }}
     steps:
       - uses: actions/checkout@v5
       - uses: aws-actions/configure-aws-credentials@v5
@@ -21,6 +23,7 @@ jobs:
       - uses: aws-actions/amazon-ecr-login@v2
       - uses: docker/setup-buildx-action@v3
       - uses: docker/build-push-action@v6
+        id: build
         with:
           push: true
           file: Infra/AWS/SAM/Dockerfile
@@ -30,3 +33,28 @@ jobs:
           sbom: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
+  sam-deploy:
+    name: SAM Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: image-push
+    steps:
+      - uses: actions/checkout@v5
+      - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_OIDC_ARN }}
+      - name: sam deploy
+        run: |
+          sam deploy \
+            --template Infra/AWS/SAM/template.yaml \
+            --config-file Infra/AWS/SAM/samconfig.toml \
+            --region "$AWS_REGION" \
+            --parameter-overrides ImageUri="$IMAGE_URI"
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          IMAGE_URI: ${{ secrets.IMAGE_REGISTRY_URL }}@${{ needs.image-push.outputs.image_digest }}

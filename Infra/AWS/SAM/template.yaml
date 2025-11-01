@@ -1,0 +1,22 @@
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  ImageUri:
+    Description: LambdaのコンテナイメージのURL
+    Type: String
+Resources:
+  AppFunc:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: AppFunc
+      PackageType: Image
+      Architectures:
+        - arm64
+      ImageUri: !Ref ImageUri
+      MemorySize: 128
+      FunctionUrlConfig:
+        AuthType: NONE
+Outputs:
+  AppFuncUrl:
+    Description: AppFunc の公開関数URL
+    Value: !GetAtt AppFuncUrl.FunctionUrl
