@@ -1,0 +1,31 @@
+name: CI Swift
+on:
+  push:
+    paths:
+      - "**.swift"
+      - "Package.resolved"
+      - ".github/workflows/ci-swift.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: swift-format
+    timeout-minutes: 5
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: brew install swift-format
+      - run: swift format lint -s -r .
+  test:
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: spm-${{ runner.os }}-${{ runners.arch }}
+      - run: swift test
