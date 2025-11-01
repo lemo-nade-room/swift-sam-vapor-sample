@@ -2,9 +2,11 @@ name: CI Swift
 on:
   push:
     paths:
-      - "**.swift"
+      - "Package.swift"
       - "Package.resolved"
       - ".github/workflows/ci-swift.yaml"
+      - "Sources/**"
+      - "Tests/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
