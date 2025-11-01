@@ -9,6 +9,7 @@ enum Server: Sendable {
     let app = try await Application.make(env)
 
     do {
+      try await configure(app)
       try await app.execute()
     } catch {
       app.logger.report(error: error)
