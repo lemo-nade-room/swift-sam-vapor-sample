@@ -1,0 +1,37 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*backup
+
+# Terraform local configuration and downloaded modules
+.terraform/
+
+# Terraform variable definition files (sensitive data)
+# Consider committing a template like terraform.tfvars.example
+*.tfvars
+
+# Terraform CLI configuration files
+.terraformrc
+terraform.rc
+
+# Crash logs from Terraform
+crash.log
+
+# Provider-specific files that might be generated
+# (e.g., for AWS, Azure, GCP, etc.)
+# Add as needed based on your providers
+# .aws/credentials
+# .azure/credentials
+
+# Editor-specific files (e.g., VS Code, Sublime Text, Vim)
+.vscode/
+.sublime-project
+.sublime-workspace
+*.swp
+*.swo
+*.swn
+*.bak
+*~
+
+# Operating system generated files
+.DS_Store
+Thumbs.db
