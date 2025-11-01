@@ -49,10 +49,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_OIDC_ARN }}
       - name: sam deploy
+        working-directory: Infra/AWS/SAM
         run: |
           sam deploy \
-            --template Infra/AWS/SAM/template.yaml \
-            --config-file Infra/AWS/SAM/samconfig.toml \
+            --template template.yaml \
+            --config-file samconfig.toml \
             --region "$AWS_REGION" \
             --parameter-overrides ImageUri="$IMAGE_URI"
         env:
