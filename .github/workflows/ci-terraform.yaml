@@ -24,7 +24,8 @@ jobs:
         with:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_OIDC_ARN }}
-      - run: terraform init
       - run: terraform fmt -check -recursive
+      - run: terraform init
+        working-directory: Infra/AWS/Terraform
       - run: terraform validate
         working-directory: Infra/AWS/Terraform
