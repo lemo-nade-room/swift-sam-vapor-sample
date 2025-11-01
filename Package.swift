@@ -4,23 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-lwa-vapor-sample",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "swift-lwa-vapor-sample",
-            targets: ["swift-lwa-vapor-sample"]
-        ),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "swift-lwa-vapor-sample"
-        ),
-        .testTarget(
-            name: "swift-lwa-vapor-sampleTests",
-            dependencies: ["swift-lwa-vapor-sample"]
-        ),
-    ]
+  name: "swift-lwa-vapor-sample",
+  products: [
+    // Products define the executables and libraries a package produces, making them visible to other packages.
+    .library(
+      name: "swift-lwa-vapor-sample",
+      targets: ["swift-lwa-vapor-sample"]
+    )
+  ],
+  targets: [
+    // Targets are the basic building blocks of a package, defining a module or a test suite.
+    // Targets can depend on other targets in this package and products from dependencies.
+    .target(
+      name: "swift-lwa-vapor-sample"
+    ),
+    .testTarget(
+      name: "swift-lwa-vapor-sampleTests",
+      dependencies: ["swift-lwa-vapor-sample"]
+    ),
+  ]
 )
