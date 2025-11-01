@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "swift-lwa-vapor-sample",
+  name: "swift-sam-vapor-sample",
   platforms: [.macOS(.v26)],
   dependencies: [
     .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0")
